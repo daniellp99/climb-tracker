@@ -1,4 +1,3 @@
-import { env } from "process";
 import { type Config } from "tailwindcss";
 import * as tailwindcssAnimate from "tailwindcss-animate";
 import { fontFamily } from "tailwindcss/defaultTheme";
@@ -9,14 +8,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        home:
-          env.NODE_ENV === "production"
-            ? "url('/home.jpg')"
-            : "url('public/home.jpg')",
-        "home-mobile":
-          env.NODE_ENV === "production"
-            ? "url('/home-mobile.jpg')"
-            : "url('public/home-mobile.jpg')",
+        home: "url('../../public/home.jpg')",
+        "home-mobile": "url('../../public/home-mobile.jpg')",
       },
       fontFamily: {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
