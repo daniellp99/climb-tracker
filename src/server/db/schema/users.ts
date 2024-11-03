@@ -6,36 +6,30 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { type AdapterAccountType } from "next-auth/adapters";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
 export const users = sqliteTable("user", {
-  id: text("id")
+  id: text()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("name"),
-  email: text("email").unique(),
-  emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
-  image: text("image"),
+  name: text(),
+  email: text().unique(),
+  emailVerified: integer({ mode: "timestamp_ms" }),
+  image: text(),
 });
 
 export const accounts = sqliteTable(
   "account",
   {
-    userId: text("userId")
+    userId: text()
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    type: text("type").$type<AdapterAccountType>().notNull(),
-    provider: text("provider").notNull(),
-    providerAccountId: text("providerAccountId").notNull(),
+    type: text().$type<AdapterAccountType>().notNull(),
+    provider: text().notNull(),
+    providerAccountId: text().notNull(),
     refresh_token: text("refresh_token"),
     access_token: text("access_token"),
     expires_at: integer("expires_at"),
     token_type: text("token_type"),
-    scope: text("scope"),
+    scope: text(),
     id_token: text("id_token"),
     session_state: text("session_state"),
   },
@@ -47,19 +41,19 @@ export const accounts = sqliteTable(
 );
 
 export const sessions = sqliteTable("session", {
-  sessionToken: text("sessionToken").primaryKey(),
-  userId: text("userId")
+  sessionToken: text().primaryKey(),
+  userId: text()
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
+  expires: integer({ mode: "timestamp_ms" }).notNull(),
 });
 
 export const verificationTokens = sqliteTable(
   "verificationToken",
   {
-    identifier: text("identifier").notNull(),
-    token: text("token").notNull(),
-    expires: integer("expires", { mode: "timestamp_ms" }).notNull(),
+    identifier: text().notNull(),
+    token: text().notNull(),
+    expires: integer({ mode: "timestamp_ms" }).notNull(),
   },
   (verificationToken) => ({
     compositePk: primaryKey({
@@ -71,18 +65,18 @@ export const verificationTokens = sqliteTable(
 export const authenticators = sqliteTable(
   "authenticator",
   {
-    credentialID: text("credentialID").notNull().unique(),
-    userId: text("userId")
+    credentialID: text().notNull().unique(),
+    userId: text()
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    providerAccountId: text("providerAccountId").notNull(),
-    credentialPublicKey: text("credentialPublicKey").notNull(),
-    counter: integer("counter").notNull(),
-    credentialDeviceType: text("credentialDeviceType").notNull(),
-    credentialBackedUp: integer("credentialBackedUp", {
+    providerAccountId: text().notNull(),
+    credentialPublicKey: text().notNull(),
+    counter: integer().notNull(),
+    credentialDeviceType: text().notNull(),
+    credentialBackedUp: integer({
       mode: "boolean",
     }).notNull(),
-    transports: text("transports"),
+    transports: text(),
   },
   (authenticator) => ({
     compositePK: primaryKey({
