@@ -1,4 +1,5 @@
 "use client";
+import { cn } from "@/lib/utils";
 import { Calendar1Icon, PersonStandingIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,6 +27,10 @@ export function NavLinks() {
               tooltip={item.title}
               asChild
               isActive={pathname.startsWith(item.url)}
+              className={cn(
+                pathname.startsWith(item.url) &&
+                  "data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:hover:bg-primary/90",
+              )}
             >
               <Link href={item.url}>
                 {item.icon && <item.icon />}
