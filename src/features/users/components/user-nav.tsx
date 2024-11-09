@@ -40,10 +40,12 @@ export function UserNav({
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="size-10 rounded-lg">
-                <AvatarImage
-                  src={session.user.image ?? undefined}
-                  alt={session.user.name ?? undefined}
-                />
+                {session.user.image && (
+                  <AvatarImage
+                    src={session.user.image}
+                    alt={session.user.name ?? "avatar"}
+                  />
+                )}
                 <AvatarFallback className="rounded-lg">
                   {generateInitials(session.user.name ?? "")}
                 </AvatarFallback>
