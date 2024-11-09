@@ -62,6 +62,7 @@ export const authConfig = {
     session: ({ session, token }) => ({
       ...session,
       user: {
+        id: token.sub,
         name: token.name,
         email: token.email,
         image: token.picture,
