@@ -17,3 +17,10 @@ export type ActionState<TSchemaType extends z.ZodType> = {
   errors?: z.inferFlattenedErrors<TSchemaType>["fieldErrors"];
   payload?: Partial<z.infer<TSchemaType>>;
 };
+
+export function kebabCaseToCapitalized(str: string) {
+  return str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
