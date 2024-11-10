@@ -1,13 +1,13 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 
 import FormErrors from "@/components/form-errors";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import SelectIconInput from "@/features/climb-routines/components/select-icon-input";
+import SelectIconPopover from "@/features/climb-routines/components/select-icon-popover";
 
 import { createClimbRoutine } from "@/features/climb-routines/actions/create-routine";
 import {
@@ -22,7 +22,9 @@ export default function RoutineForm({
   icons: CreateClimbRoutine["iconName"][];
 }) {
   const router = useRouter();
-
+  const [selectedIcon, setSelectedIcon] = useState<string | undefined>(
+    undefined,
+  );
   const [state, createRoutineAction, isPending] = useActionState(
     createClimbRoutine,
     {
@@ -83,6 +85,7 @@ export default function RoutineForm({
         />
       </fieldset>
       <fieldset disabled={isPending} aria-invalid={!!state.errors?.iconName}>
+        <input type="hidden" name="iconName" defaultValue={selectedIcon} />
         <Label
           htmlFor="iconName"
           className={cn(
@@ -92,9 +95,10 @@ export default function RoutineForm({
         >
           Icon
         </Label>
-        <SelectIconInput
+        <SelectIconPopover
           icons={icons}
-          defaultValue={state.payload?.iconName}
+          selectedIcon={selectedIcon}
+          setSelectedIcon={setSelectedIcon}
           isInvalid={!!state.errors?.iconName}
         />
         <FormErrors errors={state.errors?.iconName} fieldName="iconName" />
