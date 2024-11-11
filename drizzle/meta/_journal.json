@@ -8,6 +8,13 @@
       "when": 1730404754141,
       "tag": "0000_hard_sugar_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1731076999704,
+      "tag": "0001_giant_husk",
+      "breakpoints": true
     }
   ]
 }

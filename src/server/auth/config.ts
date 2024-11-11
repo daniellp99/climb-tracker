@@ -8,7 +8,7 @@ import {
   sessions,
   users,
   verificationTokens,
-} from "@/server/db/schema";
+} from "@/server/db/schema/users";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -62,6 +62,7 @@ export const authConfig = {
     session: ({ session, token }) => ({
       ...session,
       user: {
+        id: token.sub,
         name: token.name,
         email: token.email,
         image: token.picture,
